@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -15,10 +16,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -178,6 +185,8 @@ val products =
 @Composable
 @Preview
 fun App() {
+    var count by remember { mutableStateOf(0) }
+    var hello by remember { mutableStateOf("Hello World") }
     MaterialTheme {
         val view = LocalView.current
         val window = (view.context as Activity).window
@@ -194,9 +203,11 @@ fun App() {
                     .navigationBarsPadding()
                     .background(Color.White)
         ) {
-            Text(text = "Hello World", color = Color.Red, fontSize = 24.sp)
+            Text(text = "$hello $count", color = Color.Red, fontSize = 24.sp)
             Button(
-                onClick = { println("Button Presses") },
+                onClick = { println("Button Presses")
+                   count++
+                    hello = "Hello"},
                 shape =
                     RoundedCornerShape(
                         topEnd = 5.dp,
@@ -212,18 +223,17 @@ fun App() {
                 Text(text = "Hello World", color = Color(0xFFFF5733))
             }
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(5.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 items(products) { item ->
-                    Row(
-                        modifier =
-                            Modifier.fillMaxWidth()
-                                .clip(RoundedCornerShape(5.dp))
-                                .background(Color(0xFF000000))
-                                .clickable { println("ITEM PRESSED $item") }
-                                .padding(12.dp)
+                    Card(
+                        shape = RoundedCornerShape(5.dp),
+                        modifier = Modifier.fillMaxWidth().heightIn(100.dp),
+                        elevation = CardDefaults.cardElevation(1.dp),
+                        colors = CardDefaults.cardColors(Color(0xFF789456)),
+
                     ) {
-                        Text(text = item, color = Color(0xFFFFFFFF))
+                        Text(text = "Hello $item")
                     }
                 }
             }
