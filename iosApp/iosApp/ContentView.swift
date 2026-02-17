@@ -97,15 +97,30 @@ let products = [
 struct ContentView: View {
     @State private var count = 0
     var body: some View {
-        ScrollView() {
-        LazyVStack(alignment: .leading, spacing: 100) {
-            ForEach(products, id: \.self) { item in
-                Text("Count IS \(count) \n PRODUCT IS \(item)").onTapGesture {
-                    count += 1;
+        ZStack {
+            // Whole screen background (white)
+            Color.white.ignoresSafeArea()
+
+            // Your content
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 100) {
+                    ForEach(products, id: \.self) { item in
+                        Text("Count IS \(count) \n PRODUCT IS \(item)")
+                            .onTapGesture { count += 1 }
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-        }.frame(maxWidth: .infinity)
-        }.padding([.top, .bottom])
+            .padding([.top, .bottom])
+        }
+        .overlay(alignment: .top) {
+            GeometryReader { proxy in
+                Color.black
+                    .frame(height: proxy.safeAreaInsets.top) // ✅ exact status bar height
+                    .ignoresSafeArea(edges: .top)
+            }
+            .allowsHitTesting(false)
+        }
     }
 }
 
