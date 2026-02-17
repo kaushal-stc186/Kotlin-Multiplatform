@@ -1,27 +1,111 @@
 import SwiftUI
 import Shared
 
+let products = [
+    "Shoes",
+    "Tshirt",
+    "Watch",
+    "Bag",
+    "Jeans",
+    "Jacket",
+    "Sunglasses",
+    "Wallet",
+    "Belt",
+    "Cap",
+    "Sweater",
+    "Hoodie",
+    "Shorts",
+    "Socks",
+    "Formal Shirt",
+    "Blazer",
+    "Tie",
+    "Kurta",
+    "Sherwani",
+    "Lehenga",
+    "Saree",
+    "Heels",
+    "Sandals",
+    "Slippers",
+    "Boots",
+    "Backpack",
+    "Handbag",
+    "Clutch",
+    "Duffel Bag",
+    "Laptop Bag",
+    "Smartphone",
+    "Laptop",
+    "Tablet",
+    "Smartwatch",
+    "Headphones",
+    "Earbuds",
+    "Charger",
+    "Power Bank",
+    "Bluetooth Speaker",
+    "Camera",
+    "Tripod",
+    "Gaming Console",
+    "Keyboard",
+    "Mouse",
+    "Monitor",
+    "Printer",
+    "Desk Lamp",
+    "Office Chair",
+    "Water Bottle",
+    "Coffee Mug",
+    "Notebook",
+    "Pen",
+    "Perfume",
+    "Deodorant",
+    "Face Wash",
+    "Shampoo",
+    "Conditioner",
+    "Body Lotion",
+    "Sunscreen",
+    "Makeup Kit",
+    "Lipstick",
+    "Foundation",
+    "Nail Polish",
+    "Hair Dryer",
+    "Hair Straightener",
+    "Towel",
+    "Bedsheet",
+    "Pillow",
+    "Blanket",
+    "Curtains",
+    "Wall Clock",
+    "Photo Frame",
+    "Plant Pot",
+    "Yoga Mat",
+    "Dumbbells",
+    "Skipping Rope",
+    "Football",
+    "Cricket Bat",
+    "Badminton Racket",
+    "Tennis Ball",
+    "Travel Suitcase",
+    "Passport Cover",
+    "Lunch Box",
+    "Cookware Set",
+    "Frying Pan",
+    "Knife Set",
+    "Mixer Grinder",
+    "Microwave",
+    "Toaster",
+    "Electric Kettle"
+]
+
 struct ContentView: View {
     @State private var count = 0
     var body: some View {
-        VStack(spacing: 50){
-            Text("hello world, ios")
-            Text("Helloooooooo \(count)").foregroundColor(Color(hex: 0xFF5733)).font(.system(size: 80, weight: .bold))
-            Button("Click Me Text") {
-                count -= 1
-                print("Button Clicked")
+        ScrollView() {
+        LazyVStack(alignment: .leading, spacing: 100) {
+            ForEach(products, id: \.self) { item in
+                Text("Count IS \(count) \n PRODUCT IS \(item)").onTapGesture {
+                    count += 1;
+                }
             }
-            Button(action: {
-                count += 1
-                print("Hello World Button Pressed")
-            }) {
-                    Text("Hello World").foregroundColor(Color(hex: 0xFFFFFF))
-            }.buttonStyle(.plain)
-            .frame(width: 100, height: 100)
-            .background(Color.green)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 50))
-        }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Color(hex: 0xFF7821))
+        }.frame(maxWidth: .infinity)
+        }.padding([.top, .bottom])
     }
 }
 
